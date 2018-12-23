@@ -1,19 +1,11 @@
-/**
- * 
- */
 package com.allendowney.thinkdast;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
-import org.junit.Test;
 
 
 /**
- * @author downey
+ * @author Anton Tobolkin
  *
  */
 public class MyLinkedListTest extends MyArrayListTest {

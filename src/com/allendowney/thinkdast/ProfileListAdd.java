@@ -8,6 +8,10 @@ import org.jfree.data.xy.XYSeries;
 
 import com.allendowney.thinkdast.Profiler.Timeable;
 
+/**
+ * @author Anton Tobolkin
+ * 
+ */
 public class ProfileListAdd {
 	
 	private static final int startN = 4000;

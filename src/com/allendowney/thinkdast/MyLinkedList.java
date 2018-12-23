@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author downey
+ * @author Anton Tobolkin
  * @param <E>
  *
  */
@@ -20,7 +20,7 @@ public class MyLinkedList<E> implements List<E> {
 	/**
 	 * Node is identical to ListNode from the example, but parameterized with T
 	 *
-	 * @author downey
+	 * @author Anton Tobolkin
 	 *
 	 */
 	private class Node {

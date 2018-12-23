@@ -2,15 +2,18 @@ package com.allendowney.thinkdast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class WikiPhilosophy {
 
-    final static List<String> visited = new ArrayList<String>();
+	final static String host = "https://en.wikipedia.org";
+    final static Set<String> visited = new HashSet<String>();
     final static WikiFetcher wf = new WikiFetcher();
+    static List<String> wikies = new ArrayList<String>();
 
     /**
      * Tests a conjecture about Wikipedia and Philosophy.
@@ -29,7 +32,12 @@ public class WikiPhilosophy {
         String destination = "https://en.wikipedia.org/wiki/Philosophy";
         String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 
-        testConjecture(destination, source, 10);
+        testConjectureWithStreams(destination, source, 2);     
+        //wikies.forEach(System.out::println);
+        //"https://en.wikipedia.org/wiki/Java_(programming_language)" ->
+        //https://en.wikipedia.org/wiki/Research ->
+        //https://en.wikipedia.org/wiki/Portal:Philosophy ->
+        //"https://en.wikipedia.org/wiki/Philosophy"
     }
 
     /**
@@ -37,9 +45,28 @@ public class WikiPhilosophy {
      *
      * @param destination
      * @param source
+     * @param limit
      * @throws IOException
      */
     public static void testConjecture(String destination, String source, int limit) throws IOException {
         // TODO: FILL THIS IN!
+	
+    	
+    }
+    
+    public static void testConjectureWithStreams(String destination, String source, int limit) {
+    	wikies.add(source);
+    	
+    	while(limit-- > 0) 
+    	{	
+    		visited.addAll(wikies);
+    		wikies = wikies.stream()
+    			.map(wiki->wf.findWiki(wiki, destination))
+    			.flatMap(List::stream)
+    			.distinct()
+    			.filter(wiki->!visited.contains(wiki))
+    			.collect(Collectors.toList());
+    	};
+    	    	
     }
 }
