@@ -38,7 +38,7 @@ public class IndexTest {
 		
 		for (TermCounter tc: set) {
 			// this loop only happens once
-			assertThat(tc.size(), is(4798));
+			assertThat(tc.size(), is(3838)); //4798
 			assertThat(tc.get("occur"), is(2));
 			assertThat(tc.get("not there"), is(0));
 		}

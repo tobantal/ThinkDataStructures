@@ -37,7 +37,11 @@ public class TermCounter {
 	 */
 	public int size() {
 		// TODO: FILL THIS IN!
-		return 0;
+		int result = 0;
+		for(String key : keySet()) {
+			result += get(key);
+		}
+		return result;
 	}
 
 	/**
@@ -73,13 +77,18 @@ public class TermCounter {
 	 */
 	public void processText(String text) {
 		// replace punctuation with spaces, convert to lower case, and split on whitespace
+		/*
 		String[] array = text.replaceAll("\\pP", " ").
 				              toLowerCase().
 				              split("\\s+");
-		
+		*/
+		String[] array = text.replaceAll("\\p{P}", " ").toLowerCase().split("\\s+");
 		for (int i=0; i<array.length; i++) {
-			String term = array[i];
-			incrementTermCount(term);
+			String term = array[i];	
+			if(!term.isEmpty()) {
+				incrementTermCount(term);
+			}
+			
 		}
 	}
 
@@ -89,7 +98,6 @@ public class TermCounter {
 	 * @param term
 	 */
 	public void incrementTermCount(String term) {
-		// System.out.println(term);
 		put(term, get(term) + 1);
 	}
 
@@ -144,7 +152,7 @@ public class TermCounter {
 		WikiFetcher wf = new WikiFetcher();
 		Elements paragraphs = wf.fetchWikipedia(url);
 
-		TermCounter counter = new TermCounter(url.toString());
+		TermCounter counter = new TermCounter(url);
 		counter.processElements(paragraphs);
 		counter.printCounts();
 	}

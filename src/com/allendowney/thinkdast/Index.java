@@ -11,7 +11,7 @@ import org.jsoup.select.Elements;
 /**
  * Encapsulates a map from search term to set of TermCounter.
  *
- * @author downey
+ * @author Anton Tobolkin
  *
  */
 public class Index {
@@ -57,8 +57,7 @@ public class Index {
             // for each term, print the pages where it appears
             Set<TermCounter> tcs = get(term);
             for (TermCounter tc: tcs) {
-                Integer count = tc.get(term);
-                System.out.println("    " + tc.getLabel() + " " + count);
+                System.out.println("   " + tc.getLabel() + " " + tc.get(term));
             }
         }
     }
@@ -79,11 +78,14 @@ public class Index {
      * @param paragraphs  Collection of elements that should be indexed.
      */
     public void indexPage(String url, Elements paragraphs) {
-        // TODO: Your code here
-
         // make a TermCounter and count the terms in the paragraphs
+    	TermCounter tc = new TermCounter(url);
+    	tc.processElements(paragraphs);
 
         // for each term in the TermCounter, add the TermCounter to the index
+    	for(String term : tc.keySet()) {
+    		add(term, tc);
+    	}
     }
 
     /**

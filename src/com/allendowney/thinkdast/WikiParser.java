@@ -84,8 +84,6 @@ public class WikiParser {
 	/**
 	 * Returns the element if it is a valid link, null otherwise.
 	 * 
-	 * 
-	 * 
 	 * @param elt
 	 */
 	private Element processElement(Element elt) {
