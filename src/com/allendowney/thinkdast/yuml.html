@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>YUML.ME example</title>
+</head>
+
+<body>
+<h1>Class</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Пользователь]" >
+<h1>Simple Association</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Пользователь]имеет->[E-MAIL]">
+
+<h1>Cardinality</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Customer]1-0..*[Address]" >
+
+<h1>Directional Association</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Order]-billing >[Address], [Order]-shipping >[Address]" >
+
+<h1>Splash of Colour And UTF-8</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Customer{bg:orange}]->[Order{bg:green}]" >
+
+<h1>Aggregation</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Company]+-1>[Location], [Location]+->[Point]" >
+
+<h1>Composition</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Company]++-1>[Location]" >
+
+<h1>Notes</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Customer]<>1->*[Order], [Customer]-[note: Aggregate Root{bg:cornsilk}]" >
+<img src="http://yuml.me/diagram/scruffy/class/[Customer]<>1->*[Order], [Customer]-[Aggregate Root{bg:cornsilk}]" >
+
+<h1>Inheritance</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[Wages]^-[Salaried], [Wages]^-[Contractor]" >
+
+<h1>Interface Inheritance</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[<<ITask>>]^-.-[NightlyBillingTask]" >
+
+<h1>Dependencies</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[HttpContext]uses -.->[Response]" >
+
+<h1>Interface</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[<<IDisposable>>;Session]" >
+
+<h1>Class with Details</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[User|+Forename+;Surname;+HashedPassword;-Salt|+Login();+Logout()]" >
+
+<h1>Something Meaty!</h1>
+<img src="http://yuml.me/diagram/scruffy/class/[note: You can stick notes on diagrams too!{bg:cornsilk}],[Customer]<>1-orders 0..*>[Order], [Order]++*-*>[LineItem], [Order]-1>[DeliveryMethod], [Order]*-*>[Product], [Category]<->[Product], [DeliveryMethod]^[National], [DeliveryMethod]^[International]" >
+</body>
+</html>
