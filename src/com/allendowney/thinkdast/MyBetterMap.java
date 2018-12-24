@@ -11,7 +11,7 @@ import java.util.Set;
  * Implementation of a Map using a collection of MyLinearMap, and
  * using `hashCode` to determine which map each key should go in.
  *
- * @author downey
+ * @author Anton Tobolkin
  * @param <K>
  * @param <V>
  *
@@ -63,15 +63,13 @@ public class MyBetterMap<K, V> implements Map<K, V> {
 	@Override
 	public boolean containsKey(Object target) {
 		// to find a key, we only have to search one map
-		// TODO: FILL THIS IN!
-		return false;
+		return keySet().contains(target);
 	}
 
 	@Override
 	public boolean containsValue(Object target) {
 		// to find a value, we have to search all map
-		// TODO: FILL THIS IN!
-		return false;
+		return values().contains(target);
 	}
 
 	@Override
