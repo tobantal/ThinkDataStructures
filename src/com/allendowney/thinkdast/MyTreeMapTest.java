@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +114,7 @@ public class MyTreeMapTest {
 	/**
 	 * Test method for {@link MyLinearMap#keySet()}.
 	 */
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testKeySet() {
 		Set<String> keySet = map.keySet();

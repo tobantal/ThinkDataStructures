@@ -62,10 +62,10 @@ public class MyTreeMapExample {
 	 * @param elapsed
 	 */
 	private static void printResults(Map<String, Integer> map, final long elapsed, int height) {
-		System.out.println("    Time in milliseconds = " + (elapsed));
-		System.out.println("    Final size of MyTreeMap = " + map.size());
-		System.out.println("    log base 2 of size of MyTreeMap = " + Math.log(map.size()) / Math.log(2));
-		System.out.println("    Final height of MyTreeMap = " + height);
+		System.out.println("\tTime in milliseconds = " + (elapsed));
+		System.out.println("\tFinal size of MyTreeMap = " + map.size());
+		System.out.println("\tlog base 2 of size of MyTreeMap = " + Math.log(map.size()) / Math.log(2));
+		System.out.println("\tFinal height of MyTreeMap = " + height);
 	}
 	/**
 	 * @param map

@@ -70,8 +70,20 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 		// something to make the compiler happy
 		@SuppressWarnings("unchecked")
 		Comparable<? super K> k = (Comparable<? super K>) target;
+		Deque<Node> stack = new LinkedList<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node node = stack.pop();
+			if (node == null)
+				continue;
 
-		// TODO: FILL THIS IN!
+			if (equals(node.key, target)) {
+				return node;
+			}
+
+			stack.push(node.left);
+			stack.push(node.right);
+		}
 		return null;
 	}
 
@@ -95,7 +107,21 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	}
 
 	private boolean containsValueHelper(Node node, Object target) {
-		// TODO: FILL THIS IN!
+		Deque<Node> stack = new LinkedList<>();
+		stack.push(node);
+		while (!stack.isEmpty()) {
+			node = stack.pop();
+			if (node == null)
+				continue;
+
+			if (equals(node.value, target)) {
+				return true;
+			}
+
+			stack.push(node.left);
+			stack.push(node.right);
+		}
+
 		return false;
 	}
 
@@ -121,8 +147,21 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	@Override
 	public Set<K> keySet() {
 		Set<K> set = new LinkedHashSet<K>();
-		// TODO: FILL THIS IN!
+		addInOrder(root, set);
 		return set;
+	}
+
+	/*
+	 * Walks the tree and adds the keys to `set`.
+	 *
+	 * node: root of the tree set: set to add the nodes to
+	 */
+	private void addInOrder(Node node, Set<K> set) {
+		if (node == null)
+			return;
+		addInOrder(node.left, set);
+		set.add(node.key);
+		addInOrder(node.right, set);
 	}
 
 	@Override
@@ -139,21 +178,125 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	}
 
 	private V putHelper(Node node, K key, V value) {
-		// TODO: FILL THIS IN!
-		return null;
+		@SuppressWarnings("unchecked")
+		Comparable<? super K> k = (Comparable<? super K>) key;
+		int cmp = k.compareTo(node.key);
+
+		if (cmp < 0) {
+			if (node.left == null) {
+				node.left = new Node(key, value);
+				size++;
+				return null;
+			} else {
+				return putHelper(node.left, key, value);
+			}
+		}
+		if (cmp > 0) {
+			if (node.right == null) {
+				node.right = new Node(key, value);
+				size++;
+				return null;
+			} else {
+				return putHelper(node.right, key, value);
+			}
+		}
+
+		V oldValue = node.value;
+		node.value = value;
+		return oldValue;
+
 	}
 
 	@Override
 	public void putAll(Map<? extends K, ? extends V> map) {
-		for (Map.Entry<? extends K, ? extends V> entry: map.entrySet()) {
+		for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
+	}
+
+	private Node findParent(Object key) {
+		// some implementations can handle null as a key, but not this one
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+		// something to make the compiler happy
+		@SuppressWarnings("unchecked")
+		Comparable<? super K> k = (Comparable<? super K>) key;
+		Deque<Node> stack = new LinkedList<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node node = stack.pop();
+			if (node == null)
+				continue;
+
+			if (node.left != null) {
+				if (equals(node.left.key, key)) {
+					return node;
+				}
+			}
+
+			if (node.right != null) {
+				if (equals(node.right.key, key)) {
+					return node;
+				}
+			}
+
+			stack.push(node.left);
+			stack.push(node.right);
+		}
+		return null;
 	}
 
 	@Override
 	public V remove(Object key) {
 		// OPTIONAL TODO: FILL THIS IN!
-		throw new UnsupportedOperationException();
+
+		Node parent = findParent(key); // root
+		Node node = null;
+		if (parent.left != null) {
+			if (equals(parent.left.key, key)) {
+				node = parent.left;
+				// parent.left = reorderBeforeDelete(node);
+			}
+		} else {
+			node = parent.right;
+			// parent.right = reorderBeforeDelete(node);
+		}
+		V oldValue = (node != null) ? node.value : null;
+
+		//TODO
+		//Node nextNode = reorderBeforeDelete(node);
+		//node = nextNode;
+		
+		return oldValue;
+	}
+
+	private Node reorderBeforeDelete(Node node) {
+		//TODO
+		/*
+		  Node node = findNode(key); 
+		  System.out.println(">>>> " + node.key + ", " +
+		  node.value);
+		  
+		  V removedValue = node.value; if(removedValue!=null) { size--; }
+		  
+		  Node left = node.left; 
+		  System.out.println("left >>>> " + left); //Node
+		  topLeft = left; Node right = node.right; 
+		  
+		  System.out.println("right >>>> " +
+		  right); //Node topRight = right;
+		  
+		  while(left!=null && right!=null) { left = left.right; right = right.left; }
+		  
+		  if(left!=null) { //left = node.right; node = left; } else if(right!=null) {
+		  //right = node.left; node = right; }
+		  
+		  //node = null; //throw new UnsupportedOperationException(); return
+		  removedValue;
+		  */
+		  return null;
+		 
 	}
 
 	@Override
@@ -168,25 +311,42 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 		stack.push(root);
 		while (!stack.isEmpty()) {
 			Node node = stack.pop();
-			if (node == null) continue;
+			if (node == null)
+				continue;
+
 			set.add(node.value);
+
 			stack.push(node.left);
 			stack.push(node.right);
 		}
 		return set;
 	}
 
+	public Node getRoot() {
+		return root;
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Map<String, Integer> map = new MyTreeMap<String, Integer>();
+		MyTreeMap<String, Integer> map = new MyTreeMap<String, Integer>();
 		map.put("Word1", 1);
 		map.put("Word2", 2);
+		map.put("Word3", 3);
 		Integer value = map.get("Word1");
-		System.out.println(value);
+		// System.out.println(value);
 
-		for (String key: map.keySet()) {
+		// System.out.println(map.getRoot().right.right.key);
+
+		for (String key : map.keySet()) {
+			System.out.println(key + ", " + map.get(key));
+		}
+
+		int i = map.remove("Word2");
+		System.out.println("$$$ " + map.getRoot().right.key);
+		System.out.println(i);
+		for (String key : map.keySet()) {
 			System.out.println(key + ", " + map.get(key));
 		}
 	}
@@ -194,7 +354,7 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	/**
 	 * Makes a node.
 	 *
-	 * This is only here for testing purposes.  Should not be used otherwise.
+	 * This is only here for testing purposes. Should not be used otherwise.
 	 *
 	 * @param key
 	 * @param value
@@ -207,12 +367,12 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	/**
 	 * Sets the instance variables.
 	 *
-	 * This is only here for testing purposes.  Should not be used otherwise.
+	 * This is only here for testing purposes. Should not be used otherwise.
 	 *
 	 * @param node
 	 * @param size
 	 */
-	public void setTree(Node node, int size ) {
+	public void setTree(Node node, int size) {
 		this.root = node;
 		this.size = size;
 	}
@@ -220,7 +380,7 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	/**
 	 * Returns the height of the tree.
 	 *
-	 * This is only here for testing purposes.  Should not be used otherwise.
+	 * This is only here for testing purposes. Should not be used otherwise.
 	 *
 	 * @return
 	 */
